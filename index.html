@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>$$$</title>
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+
+      button {
+        width: fit-content;
+        margin: 1rem auto;
+      }
+
+      #copied{
+        animation-duration: 1s;
+        animation-name: disappear;
+      }
+
+      @keyframes disappear {
+        from{
+            opacity: 1;
+        }
+        to{
+            opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Latex til Canvas</h1>
+      <p>Bytt ut alle $-tegn i en Latex-tekst med \( og \).</p>
+      <label for="textIn">Lim in LaTeX-koden i feltet under:</label>
+      <textarea name="" rows="10" id="textIn"></textarea>
+      <button id="transform">Omform</button>
+      <label for="textOut">Resultat:</label>
+      <textarea name="" rows="10" id="textOut" readonly></textarea>
+      <button id="copy">Kopier resultat</button>
+    </main>
+
+    <dialog id="copied">
+        <h2>Kopiert!</h2>
+    </dialog>
+
+    <script>
+      const textIn = document.getElementById("textIn");
+      const transform = document.getElementById("transform");
+      const textOut = document.getElementById("textOut");
+      const copy = document.getElementById("copy");
+      const copied = document.getElementById("copied");
+
+      transform.addEventListener("click", handleTransformation);
+      copy.addEventListener("click", copyResult);
+
+      function handleTransformation() {
+        let inputValue = textIn.value;
+        let outputValue = "";
+        let left = true;
+        for (let char of inputValue) {
+          //console.log(char);
+          if (char === "$" && left) {
+            outputValue += "\\(";
+            left = !left;
+          } else if (char === "$" && !left) {
+            outputValue += "\\)";
+            left = !left;
+          } else {
+            outputValue += char;
+          }
+        }
+        textOut.value = outputValue;
+      }
+      
+     async function copyResult(){
+        await navigator.clipboard.writeText(textOut.value);
+        copied.showModal();
+        setTimeout(()=>{
+            copied.close();
+        }, 900);
+      }
+    </script>
+  </body>
+</html>
