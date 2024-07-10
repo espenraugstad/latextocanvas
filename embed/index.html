@@ -35,18 +35,6 @@
         animation-name: disappear;
       }
 
-      .embed{
-        display: flex;
-        flex-direction: column;
-        margin: 1rem 0 2rem;
-      }
-
-      #embeddable{
-        width: 100%;
-        height: 3rem;
-        padding: 0;
-      }
-
       @keyframes disappear {
         from{
             opacity: 1;
@@ -59,7 +47,7 @@
   </head>
   <body>
     <main>
-      <h1>Latex til Canvas</h1>
+      <h2>Latex til Canvas</h2>
       <p>Bytt ut alle $-tegn i en LaTeX-tekst med \( og \).</p>
       <label for="textIn">Lim in LaTeX-koden i feltet under:</label>
       <textarea name="" rows="10" id="textIn"></textarea>
@@ -67,11 +55,6 @@
       <label for="textOut">Resultat:</label>
       <textarea name="" rows="10" id="textOut" readonly></textarea>
       <button id="copy">Kopier resultat</button>
-      <div class="embed">
-        <label for="embeddable">Kopier koden under for å bygge inn (embedde) på en side.</label>
-        <textarea name="" id="embeddable" contenteditable="false"><iframe src="https://espenraugstad.github.io/latextocanvas/embed/" width="600" height="800"></iframe></textarea>
-        <button id="copyEmbed">Kopier for innbygging</button>
-      </div>
     </main>
 
     <dialog id="copied">
@@ -84,12 +67,9 @@
       const textOut = document.getElementById("textOut");
       const copy = document.getElementById("copy");
       const copied = document.getElementById("copied");
-      const embeddable = document.getElementById("embeddable");
-      const copyEmbed = document.getElementById("copyEmbed");
 
       transform.addEventListener("click", handleTransformation);
       copy.addEventListener("click", copyResult);
-      copyEmbed.addEventListener("click", copyEmbedding);
 
       function handleTransformation() {
         let inputValue = textIn.value;
@@ -112,14 +92,6 @@
       
      async function copyResult(){
         await navigator.clipboard.writeText(textOut.value);
-        copied.showModal();
-        setTimeout(()=>{
-            copied.close();
-        }, 900);
-      }
-
-      async function copyEmbedding(){
-        await navigator.clipboard.writeText(embeddable.value);
         copied.showModal();
         setTimeout(()=>{
             copied.close();
