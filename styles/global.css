@@ -20,8 +20,18 @@ label {
 }
 
 button {
+  font-size: 1rem;
   width: fit-content;
+  padding: 1rem;
   margin: 1rem auto;
+  border: none;
+  border-radius: 99999px;
+  background-color: #0071e3;
+  color: white;
+}
+button:hover{
+  scale: 105%;
+  transition: all 200ms;
 }
 
 #copied {
@@ -34,11 +44,7 @@ button {
   flex-direction: column;
   margin: 1rem 0 2rem;
 }
-button{
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 1rem;
-}
+
 
 #embeddable {
   width: 100%;
